@@ -19,6 +19,7 @@ const AuthForm = () => {
             socket.on(activeSessionId, (data) => {
                 console.log("Received data", data);
                 if (!data.valid) {
+                    // if (window.onfocus)
                     alert("Logout and Login again");
                     router.push('/');
                 }
@@ -28,17 +29,18 @@ const AuthForm = () => {
 
     const handleSubmit = async(event: any) => {
         event.preventDefault();
+        console.log("Mobile number" , mobileNumber);
         if (isLogin) {
             const response = await loginUser(mobileNumber);
             localStorage.setItem('sessionId', response);
             setActiveSessionId(response);
-            router.push(`/user/${mobileNumber}`);
         } else {
             const response = await createUser(mobileNumber, username);
             localStorage.setItem('sessionId', response);
             setActiveSessionId(response);
-            router.push(`/user/${mobileNumber}`);
         }
+        router.push(`/user?mobile=${mobileNumber}`);
+
     };
 
     return (

@@ -1,18 +1,19 @@
 "use client"
 
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { SERVER_BASE_URL } from "../../constants";
-import { useRouter, useSearchParams } from "next/navigation";
+import { SERVER_BASE_URL } from "../constants";
 
 export default function User() {
   const [userData, setUserData] = useState(null);
   const searchParams = useSearchParams();
 
-  const params = searchParams.get('mobile');
 
   useEffect(() => {
+    const params = searchParams.get('mobile');
     const getUser = async () => {
+      console.log("params ", params);
       const user = await axios.get(`${SERVER_BASE_URL}/${params}`);
       console.log(user, user.data);
       setUserData(user.data);
